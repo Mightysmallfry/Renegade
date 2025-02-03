@@ -84,3 +84,6 @@ sources/2 = SubResource("TileSetAtlasSource_hl5i0")
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_x1mq2")
 rendering_quadrant_size = 32
+
+[node name="Player" type="Area2D" parent="."]
+metadata/_edit_group_ = true
