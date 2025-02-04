@@ -1,6 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://bftcu05qbpyxm"]
+[gd_scene load_steps=25 format=3 uid="uid://bftcu05qbpyxm"]
 
 [ext_resource type="Texture2D" uid="uid://ciyd4tx12js1d" path="res://Assets/plains_16x16.png" id="1_7qlo6"]
+[ext_resource type="Script" path="res://Scenes/Player.cs" id="2_gehfc"]
+[ext_resource type="Texture2D" uid="uid://cx825hbj47mrh" path="res://Assets/Shadow character animation package/Idel Animation 48x48/IdleAnimation001.png" id="2_py0s5"]
+[ext_resource type="Texture2D" uid="uid://ct4iqeygmqk0g" path="res://Assets/Shadow character animation package/Idel Animation 48x48/IdleAnimation002.png" id="3_3uu7v"]
+[ext_resource type="Texture2D" uid="uid://bwlwdjdt76lr0" path="res://Assets/Shadow character animation package/Idel Animation 48x48/IdleAnimation003.png" id="4_khu7c"]
+[ext_resource type="Texture2D" uid="uid://c3o8uo0weutus" path="res://Assets/Shadow character animation package/Idel Animation 48x48/IdleAnimation004.png" id="5_bli0d"]
+[ext_resource type="Texture2D" uid="uid://btdv6ge7p2x7g" path="res://Assets/Shadow character animation package/Idel Animation 48x48/IdleAnimation005.png" id="6_nxk0u"]
+[ext_resource type="Texture2D" uid="uid://bdha6qpyvax8c" path="res://Assets/Shadow character animation package/Idel Animation 48x48/IdleAnimation006.png" id="7_61j1j"]
+[ext_resource type="Texture2D" uid="uid://oo8ssi5u4s5" path="res://Assets/Shadow character animation package/Idel Animation 48x48/IdleAnimation007.png" id="8_uggrm"]
+[ext_resource type="Texture2D" uid="uid://dbm5r05cx4w0s" path="res://Assets/Shadow character animation package/Idel Animation 48x48/IdleAnimation008.png" id="9_t7h23"]
+[ext_resource type="Texture2D" uid="uid://cuev0y3ew0737" path="res://Assets/Shadow character animation package/Idel Animation 48x48/IdleAnimation009.png" id="10_pnx3l"]
+[ext_resource type="Texture2D" uid="uid://ceq13txboto8y" path="res://Assets/Shadow character animation package/Idel Animation 48x48/IdleAnimation010.png" id="11_4kq2y"]
+[ext_resource type="Texture2D" uid="uid://cd2wyxnuyp5vo" path="res://Assets/Shadow character animation package/Run Animation 48x48/RunAnimation001.png" id="12_cup11"]
+[ext_resource type="Texture2D" uid="uid://dhv2kubklatqc" path="res://Assets/Shadow character animation package/Run Animation 48x48/RunAnimation002.png" id="13_rvole"]
+[ext_resource type="Texture2D" uid="uid://ospxxolyllmi" path="res://Assets/Shadow character animation package/Run Animation 48x48/RunAnimation003.png" id="14_8ctq8"]
+[ext_resource type="Texture2D" uid="uid://deim05mxq55ym" path="res://Assets/Shadow character animation package/Run Animation 48x48/RunAnimation004.png" id="15_xlqcv"]
+[ext_resource type="Texture2D" uid="uid://cvgyo3y06w04t" path="res://Assets/Shadow character animation package/Run Animation 48x48/RunAnimation005.png" id="16_lrb38"]
+[ext_resource type="Texture2D" uid="uid://o8gpnty4pepr" path="res://Assets/Shadow character animation package/Run Animation 48x48/RunAnimation006.png" id="17_04cvn"]
+[ext_resource type="Texture2D" uid="uid://by0vchur80kyi" path="res://Assets/Shadow character animation package/Run Animation 48x48/RunAnimation007.png" id="18_na8pc"]
+[ext_resource type="Texture2D" uid="uid://66wwxlcyxd6w" path="res://Assets/Shadow character animation package/Run Animation 48x48/RunAnimation008.png" id="19_m4amu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hl5i0"]
 texture = ExtResource("1_7qlo6")
@@ -79,6 +98,77 @@ terrain_set_0/terrain_0/name = "Terrain 0"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/2 = SubResource("TileSetAtlasSource_hl5i0")
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_5w3na"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_py0s5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_3uu7v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_khu7c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_bli0d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_nxk0u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_61j1j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_uggrm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_t7h23")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_pnx3l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_4kq2y")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_cup11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_rvole")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_8ctq8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_xlqcv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_lrb38")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_04cvn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_na8pc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_m4amu")
+}],
+"loop": true,
+"name": &"Run",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vb5qo"]
+radius = 8.0
+height = 32.0
+
 [node name="DevScene" type="Node2D"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
@@ -86,4 +176,12 @@ tile_set = SubResource("TileSet_x1mq2")
 rendering_quadrant_size = 32
 
 [node name="Player" type="Area2D" parent="."]
+script = ExtResource("2_gehfc")
 metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+sprite_frames = SubResource("SpriteFrames_5w3na")
+animation = &"Run"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("CapsuleShape2D_vb5qo")
