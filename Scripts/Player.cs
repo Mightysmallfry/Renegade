@@ -9,16 +9,37 @@ public partial class Player : Area2D
 	public delegate void HitEventHandler();
 
 	[Export]
-	public int Speed {get;set;} = 32;
+	public int Speed {get;set;} = 100;
+
+	[Export]
+	public Vector2 position {get;set;} = new Vector2(256, 64);
 
 	public Vector2 ScreenSize;
+
+
+
+	private void OnBodyEntered(Node2D body)
+	{
+		Hide();
+		EmitSignal(SignalName.Hit);
+		GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
+	}
+
+	public void Start()
+	{
+		Position = position;
+		Show();
+		GetNode<CollisionShape2D>("CollisionShape2D").Disabled = false;
+
+	}
+
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		ScreenSize = GetViewportRect().Size;
-
 		Hide();
+		Start();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
