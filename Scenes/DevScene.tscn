@@ -170,7 +170,6 @@ radius = 8.0
 height = 32.0
 
 [node name="DevScene" type="Node2D"]
-position = Vector2(175, 227)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_x1mq2")

@@ -12,11 +12,15 @@ public partial class Player : Area2D
 	public int Speed {get;set;} = 100;
 
 	[Export]
-	public Vector2 position {get;set;} = new Vector2(256, 64);
+	public Vector2 position {get;set;} = new Vector2(128, 64);
+
+	public string input_right = "move_right";
+	public string input_left = "move_left";
+	public string input_jump = "move_jump";
+
+
 
 	public Vector2 ScreenSize;
-
-
 
 	private void OnBodyEntered(Node2D body)
 	{
@@ -33,7 +37,6 @@ public partial class Player : Area2D
 
 	}
 
-
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -48,17 +51,17 @@ public partial class Player : Area2D
 
 		var velocity = Vector2.Zero; //Make the player's movement vector
 
-		if (Input.IsActionPressed("move_right"))
+		if (Input.IsActionPressed(input_right))
 		{
 			velocity.X += 1;
 		}
 
-		if (Input.IsActionPressed("move_left"))
+		if (Input.IsActionPressed(input_left))
 		{
 			velocity.X -= 1;
 		}
 
-		if (Input.IsActionPressed("move_jump"))
+		if (Input.IsActionPressed(input_jump))
 		{
 			//Put code for handling the jump here
 		}
@@ -83,8 +86,6 @@ public partial class Player : Area2D
 			animatedSprite2D.FlipV = false;
 			animatedSprite2D.FlipH = velocity.X < 0;
 		}
-
-
 
 
 		Position += velocity * (float)delta;
