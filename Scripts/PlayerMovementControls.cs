@@ -1,9 +1,8 @@
 using Godot;
-using System;
-using System.Security.Cryptography;
 
-public partial class Player : Area2D
+public partial class PlayerMovementControls : Area2D
 {
+// Point of this script is to allow access to player movement, give them jumps and handle collision behavior (jumping or running into a wall)
 
 	[Signal]
 	public delegate void HitEventHandler();
@@ -14,10 +13,24 @@ public partial class Player : Area2D
 	[Export]
 	public Vector2 position {get;set;} = new Vector2(128, 64);
 
+
+	[Export]
+	public float JumpHeight {get;set;} = 150;
+	
+	[Export]
+	public float JumpTimeToPeak {get;set;} = 0.2f;
+
+	[Export]
+	public float JumpTimeToDescent {get;set;} = 0.1f;
+
+
+	public float JumpVelocity;
+	public float JumpAscentGravity;
+	public float JumpDescentGravity;
+
 	public string input_right = "move_right";
 	public string input_left = "move_left";
 	public string input_jump = "move_jump";
-
 
 
 	public Vector2 ScreenSize;
@@ -29,9 +42,14 @@ public partial class Player : Area2D
 		GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
 	}
 
-	public void Start()
+	public void Initialize()
 	{
 		Position = position;
+		
+		JumpVelocity = (2.0f * JumpHeight / JumpTimeToPeak) * -1.0f;
+		JumpAscentGravity = ((-2.0f * JumpHeight)/ (JumpTimeToPeak * JumpTimeToPeak)) * -1.0f;
+		JumpDescentGravity = ((-2.0f * JumpHeight)/ (JumpTimeToDescent * JumpTimeToDescent)) * -1.0f;
+
 		Show();
 		GetNode<CollisionShape2D>("CollisionShape2D").Disabled = false;
 
@@ -42,14 +60,15 @@ public partial class Player : Area2D
 	{
 		ScreenSize = GetViewportRect().Size;
 		Hide();
-		Start();
+		Initialize();
 	}
+
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-
 		var velocity = Vector2.Zero; //Make the player's movement vector
+		velocity.Y += GetGravity(velocity.Y) * (float)delta;
 
 		if (Input.IsActionPressed(input_right))
 		{
@@ -64,12 +83,12 @@ public partial class Player : Area2D
 		if (Input.IsActionPressed(input_jump))
 		{
 			//Put code for handling the jump here
+
+			velocity.Y = JumpVelocity;
 		}
 
 
 		var animatedSprite2D = GetNode<AnimatedSprite2D>("AnimatedSprite2D"); 
-
-
 		if (velocity.Length() > 0)
 		{
 			velocity = velocity.Normalized() * Speed;
@@ -79,6 +98,7 @@ public partial class Player : Area2D
 		{
 			animatedSprite2D.Stop();
 		}
+
 
 		if (velocity.X != 0)
 		{
@@ -94,6 +114,18 @@ public partial class Player : Area2D
 			y: Mathf.Clamp(Position.Y, 0, ScreenSize.Y)
 			);
 
-
 	}
+
+	private float GetGravity(float YVelocity)
+	{
+		if (YVelocity < 0.0f) 
+		{
+			return JumpAscentGravity;
+		}
+		else 
+		{
+			return JumpDescentGravity;
+		}
+	}
+
 }
