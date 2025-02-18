@@ -12,18 +12,27 @@ public partial class PlayerMovementController : CharacterBody2D
 	[Export] public float FallGravityMultiplier = 2.2f; // Faster falling
 	[Export] public float CoyoteTime = 0.1f;
 	[Export] public float JumpBufferTime = 0.1f;
+	[Export] public Vector2 StartingPosition = Vector2.Zero;
 
 	private float coyoteTimeCounter = 0;
 	private float jumpBufferCounter = 0;
 	private bool isJumping = false;
 	private Vector2 velocity;
 
-	public override void _PhysicsProcess(double delta)
+    public override void _Ready()
+    {
+        base._Ready();
+		Position = StartingPosition;
+		Show();
+    }
+
+    public override void _PhysicsProcess(double delta)
 	{
 		float dt = (float)delta;
 
 		// Get input direction (-1 for left, 1 for right, 0 if no input)
 		float direction = Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left");
+		velocity = Vector2.Zero;
 
 		// Apply Gravity
 		if (!IsOnFloor())
