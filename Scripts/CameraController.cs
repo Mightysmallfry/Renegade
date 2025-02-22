@@ -3,8 +3,8 @@ using Godot;
 public partial class CameraController : Camera2D
 {
     [Export] public NodePath TargetPath; // Assign this in the editor or change dynamically
-    [Export] public float FollowSpeed = 5.0f; // Adjust for smoothness
-    [Export] public Vector2 Offset = new Vector2(0, -50); // Adjust for better framing
+    [Export] public float FollowSpeed = 0.0f; // Adjust for smoothness
+    //[Export] public Vector2 Offset = new Vector2(0, -50); // Adjust for better framing
     [Export] public bool UseBounds = false;
     [Export] public Vector2 MinBounds = new Vector2(-500, -500);
     [Export] public Vector2 MaxBounds = new Vector2(500, 500);
@@ -19,15 +19,15 @@ public partial class CameraController : Camera2D
         }
     }
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
         if (target == null) return;
 
         // Target position with offset
-        Vector2 targetPosition = target.GlobalPosition + Offset;
+        Vector2 targetPosition = target.Position + Offset;
 
         // Smoothly move towards the target
-        Position = Position.Lerp(targetPosition, (float)delta * FollowSpeed);
+        Position = Position.Lerp(targetPosition, FollowSpeed);
 
         // Clamp the camera position if bounds are enabled
         if (UseBounds)

@@ -2,13 +2,13 @@ using Godot;
 
 public partial class PlayerMovementController : CharacterBody2D
 {
-	[Export] public float MoveSpeed = 200.0f;
-	[Export] public float Acceleration = 20.0f;
-	[Export] public float AirControlFactor = 0.6f;
-	[Export] public float Friction = 15.0f;
+	[Export] public float MoveSpeed = 600.0f;
+	[Export] public float Acceleration = 100.0f;
+	[Export] public float AirControlFactor = 1.0f;
+	[Export] public float Friction = 1.0f;
 	[Export] public float JumpForce = -400.0f;
 	[Export] public float MaxFallSpeed = 900.0f;
-	[Export] public float Gravity = 1200.0f;
+	[Export] public float Gravity = 200.0f;
 	[Export] public float FallGravityMultiplier = 2.2f; // Faster falling
 	[Export] public float CoyoteTime = 0.1f;
 	[Export] public float JumpBufferTime = 0.1f;
@@ -18,11 +18,14 @@ public partial class PlayerMovementController : CharacterBody2D
 	private float jumpBufferCounter = 0;
 	private bool isJumping = false;
 	private Vector2 velocity;
+	
+	private AnimatedSprite2D animatedSprite2D;
 
     public override void _Ready()
     {
         base._Ready();
 		Position = StartingPosition;
+		animatedSprite2D = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		Show();
     }
 
@@ -37,7 +40,7 @@ public partial class PlayerMovementController : CharacterBody2D
 		// Apply Gravity
 		if (!IsOnFloor())
 		{
-			velocity.Y += (velocity.Y > 0 ? Gravity * FallGravityMultiplier : Gravity) * dt;
+			velocity.Y += (velocity.Y > 0 ? Gravity * FallGravityMultiplier : Gravity);
 			velocity.Y = Mathf.Min(velocity.Y, MaxFallSpeed);
 		}
 		else
@@ -75,12 +78,16 @@ public partial class PlayerMovementController : CharacterBody2D
 		float acceleration = IsOnFloor() ? Acceleration : Acceleration * AirControlFactor;
 		if (direction != 0)
 		{
-			velocity.X = Mathf.MoveToward(velocity.X, targetSpeed, acceleration * dt);
+			velocity.X = Mathf.MoveToward(velocity.X, targetSpeed, acceleration);
+			GD.Print("velocity " + velocity.X);
 		}
 		else
 		{
-			velocity.X = Mathf.MoveToward(velocity.X, 0, Friction * dt);
+			velocity.X = Mathf.MoveToward(velocity.X, 0, Friction);
 		}
+
+
+		ProcessAnimations(velocity);
 
 		// Apply Movement
 		Velocity = velocity;
@@ -88,5 +95,32 @@ public partial class PlayerMovementController : CharacterBody2D
 
 		// Reduce coyote time each frame
 		coyoteTimeCounter -= dt;
+	}
+
+
+
+	private void ProcessAnimations(Vector2 velocity)
+	{
+		if (velocity.Length() > 0)
+		{
+			animatedSprite2D.Play();
+		}
+		else
+		{
+			animatedSprite2D.Stop();
+		}
+
+		if (velocity.X != 0)
+		{
+			animatedSprite2D.Animation = "Run";
+			animatedSprite2D.FlipV = false;
+			animatedSprite2D.FlipH = velocity.X < 0;
+		}
+		if (velocity.Y != 0)
+		{
+			animatedSprite2D.Animation = "Jump";
+			animatedSprite2D.FlipV = false;
+		}
+
 	}
 }
