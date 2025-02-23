@@ -2,13 +2,13 @@ using Godot;
 
 public partial class PlayerMovementController : CharacterBody2D
 {
-	[Export] public float MoveSpeed = 600.0f;
+	[Export] public float MoveSpeed = 300.0f;
 	[Export] public float Acceleration = 100.0f;
 	[Export] public float AirControlFactor = 1.0f;
-	[Export] public float Friction = 1.0f;
-	[Export] public float JumpForce = -400.0f;
-	[Export] public float MaxFallSpeed = 900.0f;
-	[Export] public float Gravity = 200.0f;
+	[Export] public float Friction = 50.0f;
+	[Export] public float JumpForce = -1200.0f;
+	[Export] public float MaxFallSpeed = 800.0f;
+	[Export] public float Gravity = 100.0f;
 	[Export] public float FallGravityMultiplier = 2.2f; // Faster falling
 	[Export] public float CoyoteTime = 0.1f;
 	[Export] public float JumpBufferTime = 0.1f;
@@ -35,7 +35,7 @@ public partial class PlayerMovementController : CharacterBody2D
 
 		// Get input direction (-1 for left, 1 for right, 0 if no input)
 		float direction = Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left");
-		velocity = Vector2.Zero;
+		//velocity = Vector2.Zero;
 
 		// Apply Gravity
 		if (!IsOnFloor())
@@ -46,6 +46,7 @@ public partial class PlayerMovementController : CharacterBody2D
 		else
 		{
 			coyoteTimeCounter = CoyoteTime; // Reset coyote time
+			velocity.Y = 0.0f;
 		}
 
 		// Handle Jump Buffering
@@ -73,19 +74,18 @@ public partial class PlayerMovementController : CharacterBody2D
 			velocity.Y *= 0.5f; // Makes short jumps feel responsive
 		}
 
+
 		// Acceleration & Friction (Snappy Controls)
 		float targetSpeed = direction * MoveSpeed;
 		float acceleration = IsOnFloor() ? Acceleration : Acceleration * AirControlFactor;
 		if (direction != 0)
 		{
 			velocity.X = Mathf.MoveToward(velocity.X, targetSpeed, acceleration);
-			GD.Print("velocity " + velocity.X);
 		}
 		else
 		{
 			velocity.X = Mathf.MoveToward(velocity.X, 0, Friction);
 		}
-
 
 		ProcessAnimations(velocity);
 
