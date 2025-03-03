@@ -8,7 +8,7 @@ public partial class PlayerMovementController : CharacterBody2D
 	[Export] public float Friction = 50.0f;
 	[Export] public float JumpForce = -1200.0f;
 	[Export] public float MaxFallSpeed = 800.0f;
-	[Export] public float Gravity = 100.0f;
+	[Export] public float Gravity = 50.0f;
 	[Export] public float FallGravityMultiplier = 2.2f; // Faster falling
 	[Export] public float CoyoteTime = 0.1f;
 	[Export] public float JumpBufferTime = 0.1f;
