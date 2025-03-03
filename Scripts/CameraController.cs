@@ -10,6 +10,7 @@ public partial class CameraController : Camera2D
     [Export] public Vector2 MaxBounds = new Vector2(50, 50);
 
     private Node2D target; // The object the camera follows
+    
 
     public override void _Ready()
     {

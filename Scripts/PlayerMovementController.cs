@@ -6,18 +6,20 @@ public partial class PlayerMovementController : CharacterBody2D
 	[Export] public float Acceleration = 100.0f;
 	[Export] public float AirControlFactor = 1.0f;
 	[Export] public float Friction = 50.0f;
-	[Export] public float JumpForce = -1200.0f;
+	[Export] public float JumpForce = -300.0f;
 	[Export] public float MaxFallSpeed = 800.0f;
-	[Export] public float Gravity = 50.0f;
+	[Export] public float Gravity = 10.0f;
 	[Export] public float FallGravityMultiplier = 2.2f; // Faster falling
 	[Export] public float CoyoteTime = 0.1f;
 	[Export] public float JumpBufferTime = 0.1f;
 	[Export] public Vector2 StartingPosition = Vector2.Zero;
+	[Export] public int MaxJumpCount = 2;
 
 	private float coyoteTimeCounter = 0;
 	private float jumpBufferCounter = 0;
 	private bool isJumping = false;
 	private Vector2 velocity;
+	private int jumpCount = 0;
 	
 	private AnimatedSprite2D animatedSprite2D;
 
@@ -46,6 +48,7 @@ public partial class PlayerMovementController : CharacterBody2D
 		else
 		{
 			coyoteTimeCounter = CoyoteTime; // Reset coyote time
+			jumpCount = 0;
 			velocity.Y = 0.0f;
 		}
 
@@ -60,10 +63,11 @@ public partial class PlayerMovementController : CharacterBody2D
 		}
 
 		// Jumping Logic
-		if (jumpBufferCounter > 0 && (IsOnFloor() || coyoteTimeCounter > 0))
+		if (jumpBufferCounter > 0 && (IsOnFloor() || coyoteTimeCounter > 0 || jumpCount < MaxJumpCount))
 		{
 			velocity.Y = JumpForce;
 			isJumping = true;
+			jumpCount++;
 			jumpBufferCounter = 0;
 			coyoteTimeCounter = 0; // Prevent double jumping using coyote time
 		}

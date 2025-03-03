@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://bftcu05qbpyxm"]
+[gd_scene load_steps=32 format=4 uid="uid://bftcu05qbpyxm"]
 
 [ext_resource type="Texture2D" uid="uid://cx825hbj47mrh" path="res://Assets/Shadow character animation package/Idel Animation 48x48/IdleAnimation001.png" id="2_py0s5"]
 [ext_resource type="Texture2D" uid="uid://ct4iqeygmqk0g" path="res://Assets/Shadow character animation package/Idel Animation 48x48/IdleAnimation002.png" id="3_3uu7v"]
@@ -25,7 +25,6 @@
 [ext_resource type="Texture2D" uid="uid://lb4i25jse0ql" path="res://Assets/Shadow character animation package/Jump Animation 48x48/JumpAnimation006.png" id="18_rlmmh"]
 [ext_resource type="Texture2D" uid="uid://66wwxlcyxd6w" path="res://Assets/Shadow character animation package/Run Animation 48x48/RunAnimation008.png" id="19_m4amu"]
 [ext_resource type="Script" path="res://Scripts/PlayerMovementController.cs" id="21_65b1n"]
-[ext_resource type="Script" path="res://Scripts/CameraController.cs" id="21_fmc3p"]
 [ext_resource type="Texture2D" uid="uid://bi6ljryyi7vv1" path="res://Assets/Sidescrolltileset_32x32(new).png" id="21_sno0p"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1lhpt"]
@@ -256,7 +255,7 @@ tile_set = SubResource("TileSet_0hqln")
 use_kinematic_bodies = true
 
 [node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(200, 84)
+position = Vector2(199, 108)
 script = ExtResource("21_65b1n")
 metadata/_edit_group_ = true
 
@@ -269,5 +268,5 @@ animation = &"Run"
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 offset = Vector2(0, -50)
-script = ExtResource("21_fmc3p")
-TargetPath = NodePath("..")
+position_smoothing_enabled = true
+editor_draw_drag_margin = true
